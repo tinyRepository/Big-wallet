@@ -1,0 +1,16 @@
+@mixin font($size, $color: $black-color, $weight: normal) {
+  color: $color;
+  font-family: 'Roboto', Helvetica, Arial, sans-serif;
+  font-size: $size;
+  font-weight: $weight;
+}
+
+@mixin removeBtnDefaults() {
+  border: none;
+  outline: none;
+  padding: 0;
+  text-align: left;
+  background: transparent;
+  cursor: pointer;
+  user-select: none;
+}

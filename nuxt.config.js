@@ -13,11 +13,22 @@ export default {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      {
+        href:
+          'https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap',
+        rel: 'stylesheet',
+      },
+    ],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: ['~/assets/sass/main.scss', 'normalize.css/normalize.css'],
+  css: ['normalize.css/normalize.css'],
+
+  styleResources: {
+    scss: ['~/assets/scss/main.scss'],
+  },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [],
@@ -29,11 +40,7 @@ export default {
   buildModules: [],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [
-    // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios',
-    'nuxt-i18n',
-  ],
+  modules: ['@nuxtjs/style-resources', '@nuxtjs/axios', 'nuxt-i18n'],
 
   i18n: {},
 
