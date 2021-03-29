@@ -1,11 +1,11 @@
 <template>
   <div class="registration">
-    <h1 class="registration__title">Регистрация</h1>
+    <h1 class="registration__title">{{ $t('registration') }}</h1>
     <form @submit.prevent="submitForm" class="registration__form">
       <input-el
         v-model="form.name"
         class="registration__field"
-        placeholder="Имя"
+        :placeholder="$t('name')"
       />
       <input-el
         v-model="form.email"
@@ -16,9 +16,11 @@
         v-model="form.password"
         type="password"
         class="registration__field"
-        placeholder="Пароль"
+        :placeholder="$t('password')"
       />
-      <button-auth class="registration__button">Зарегистрироваться</button-auth>
+      <button-auth class="registration__button">
+        {{ $t('register') }}
+      </button-auth>
     </form>
   </div>
 </template>
@@ -29,6 +31,8 @@ import InputEl from '../components/InputEl'
 import ButtonAuth from '../components/ButtonAuth'
 
 export default {
+  name: 'registration',
+  middleware: 'guest',
   components: { InputEl, ButtonAuth },
   data() {
     return {

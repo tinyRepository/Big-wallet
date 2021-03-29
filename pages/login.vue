@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <h1 class="login__title">Вход</h1>
+    <h1 class="login__title">{{ $t('signIn') }}</h1>
 
     <form @submit.prevent="submitForm" class="login__form">
       <input-el v-model="form.email" class="login__field" placeholder="Email" />
@@ -8,9 +8,9 @@
         v-model="form.password"
         type="password"
         class="login__field"
-        placeholder="Пароль"
+        :placeholder="$t('password')"
       />
-      <button-auth class="login__button">Войти</button-auth>
+      <button-auth class="login__button">{{ $t('enter') }}</button-auth>
     </form>
   </div>
 </template>
@@ -19,6 +19,8 @@
 import { mapActions } from 'vuex'
 
 export default {
+  name: 'login',
+  middleware: 'guest',
   data() {
     return {
       form: {
@@ -28,7 +30,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['registrationUser']),
+    ...mapActions(['loginUser']),
     submitForm() {
       this.loginUser(this.form)
     },

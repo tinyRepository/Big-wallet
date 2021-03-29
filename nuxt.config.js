@@ -1,3 +1,6 @@
+import ru from './plugins/locale/ru'
+import en from './plugins/locale/en'
+
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
@@ -40,9 +43,25 @@ export default {
   buildModules: [],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['@nuxtjs/style-resources', '@nuxtjs/axios', 'nuxt-i18n'],
+  modules: [
+    '@nuxtjs/style-resources',
+    '@nuxtjs/axios',
+    'nuxt-i18n',
+    ['cookie-universal-nuxt', { alias: 'cookiz' }],
+  ],
 
   i18n: {},
+  i18n: {
+    locales: ['en', 'ru'],
+    defaultLocale: 'ru',
+    vueI18n: {
+      fallbackLocale: 'en',
+      messages: {
+        en,
+        ru,
+      },
+    },
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
