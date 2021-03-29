@@ -1,13 +1,17 @@
 <template>
-  <input
-    class="input"
-    :type="type"
-    :value="value"
-    v-bind="$attrs"
-    @input="onInput"
-  />
+  <div class="input-field">
+    <input
+      class="input"
+      :type="type"
+      :value="value"
+      v-bind="$attrs"
+      @input="onInput"
+    />
+    <span class="input-error" v-if="showError">{{ $t('error') }} </span>
+  </div>
 </template>
 
+// TODO add locale
 <script>
 export default {
   props: {
@@ -18,6 +22,16 @@ export default {
     type: {
       type: String,
       default: 'text',
+    },
+    validation: {
+      type: Object,
+      default: () => {},
+    },
+  },
+  computed: {
+    showError() {
+      const { $dirty, $invalid } = this.validation
+      return $dirty && $invalid
     },
   },
   methods: {
@@ -44,5 +58,16 @@ export default {
     -webkit-text-fill-color: $white-color;
     -webkit-box-shadow: 0 0 0px 1000px $black-color inset;
   }
+}
+
+.input-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-error {
+  @include font(14px, $red-color);
+  text-align: center;
+  margin-top: 4px;
 }
 </style>

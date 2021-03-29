@@ -11,4 +11,5 @@ export default {
   get: 'Получить',
   send: 'Отправить',
   goToHome: 'На главную',
+  error: 'Ошибка!',
 }

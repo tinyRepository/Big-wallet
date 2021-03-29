@@ -3,9 +3,15 @@
     <h1 class="login__title">{{ $t('signIn') }}</h1>
 
     <form @submit.prevent="submitForm" class="login__form">
-      <input-el v-model="form.email" class="login__field" placeholder="Email" />
       <input-el
-        v-model="form.password"
+        class="login__field"
+        placeholder="Email"
+        v-model="$v.form.email.$model"
+        :validation="$v.form.email"
+      />
+      <input-el
+        v-model="$v.form.password.$model"
+        :validation="$v.form.password"
         type="password"
         class="login__field"
         :placeholder="$t('password')"
@@ -17,9 +23,12 @@
 
 <script>
 import { mapActions } from 'vuex'
+import { required, email, minLength } from 'vuelidate/lib/validators'
+import validateForm from '@/mixins/validateForm.js'
 
 export default {
   name: 'login',
+  mixins: [validateForm],
   middleware: 'guest',
   data() {
     return {
@@ -29,10 +38,24 @@ export default {
       },
     }
   },
+  validations: {
+    form: {
+      email: {
+        required,
+        email,
+      },
+      password: {
+        required,
+        minLength: minLength(6),
+      },
+    },
+  },
   methods: {
     ...mapActions(['loginUser']),
     submitForm() {
-      this.loginUser(this.form)
+      this.validateForm().then(() => {
+        this.loginUser(this.form)
+      })
     },
   },
 }

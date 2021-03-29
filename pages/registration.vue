@@ -3,17 +3,20 @@
     <h1 class="registration__title">{{ $t('registration') }}</h1>
     <form @submit.prevent="submitForm" class="registration__form">
       <input-el
-        v-model="form.name"
+        v-model="$v.form.name.$model"
+        :validation="$v.form.name"
         class="registration__field"
         :placeholder="$t('name')"
       />
       <input-el
-        v-model="form.email"
+        v-model="$v.form.email.$model"
+        :validation="$v.form.email"
         class="registration__field"
         placeholder="Email"
       />
       <input-el
-        v-model="form.password"
+        v-model="$v.form.password.$model"
+        :validation="$v.form.password"
         type="password"
         class="registration__field"
         :placeholder="$t('password')"
@@ -27,12 +30,15 @@
 
 <script>
 import { mapActions } from 'vuex'
-import InputEl from '../components/InputEl'
-import ButtonAuth from '../components/ButtonAuth'
+import { required, email, minLength } from 'vuelidate/lib/validators'
+import validateForm from '@/mixins/validateForm.js'
+import InputEl from '@/components/InputEl'
+import ButtonAuth from '@/components/ButtonAuth'
 
 export default {
   name: 'registration',
   middleware: 'guest',
+  mixins: [validateForm],
   components: { InputEl, ButtonAuth },
   data() {
     return {
@@ -43,10 +49,28 @@ export default {
       },
     }
   },
+  validations: {
+    form: {
+      name: {
+        required,
+        minLength: minLength(2),
+      },
+      email: {
+        required,
+        email,
+      },
+      password: {
+        required,
+        minLength: minLength(6),
+      },
+    },
+  },
   methods: {
     ...mapActions(['registrationUser']),
     submitForm() {
-      this.registrationUser(this.form)
+      this.validateForm().then(() => {
+        this.registrationUser(this.form)
+      })
     },
   },
 }

@@ -11,4 +11,5 @@ export default {
   get: 'Get',
   send: 'Send',
   goToHome: 'Go to Homepage',
+  error: 'Error!',
 }
